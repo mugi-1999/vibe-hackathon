@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Calculate Your Score</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        #three-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Calculate Score Section Content -->
+    <section id="calculate-score-content" class="relative z-10 flex items-center justify-center min-h-screen px-4 py-16">
+        <div class="bg-gray-800 bg-opacity-70 p-8 md:p-10 rounded-xl shadow-2xl max-w-2xl mx-auto backdrop-blur-sm w-full">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">Calculate Your Developer Trust Score</h2>
+            <p class="text-md md:text-lg text-gray-300 mb-8 text-center">
+                Provide links to your public contributions and relevant certificate information to get a comprehensive AI-driven DevTrust Score.
+            </p>
+            <form id="score-calculation-form" class="space-y-6">
+                <!-- Dynamic Input Fields for Contribution Links -->
+                <div id="contribution-links-container" class="space-y-4">
+                    <div>
+                        <label for="link-1" class="block text-sm font-medium text-gray-300">Public Contribution Link 1 (e.g., GitHub, LinkedIn, Portfolio)</label>
+                        <input type="url" id="link-1" name="link-1" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="https://github.com/your-username">
+                    </div>
+                </div>
+                <button type="button" id="add-link-button" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">
+                    Add More Contribution Links
+                </button>
+
+                <!-- Certificate Information/Text Area -->
+                <div class="mt-8">
+                    <label for="certificates-text" class="block text-sm font-medium text-gray-300">Certificate Information (e.g., "Google Cloud Certified Developer", links to online certificates)</label>
+                    <textarea id="certificates-text" name="certificates-text" rows="4" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="List your certifications or provide links to them..."></textarea>
+                    <p class="mt-2 text-xs text-gray-400">Provide text descriptions or links for your certificates. Actual file uploads are not processed for AI analysis in this demo.</p>
+                </div>
+
+                <!-- Score Calculation Button -->
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    Calculate My Score
+                </button>
+                <div id="loading-message" class="mt-4 text-center text-yellow-400 hidden">Calculating your score... This may take a moment.</div>
+                <div id="error-message" class="mt-4 text-center text-red-400 hidden"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Initialization (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Global userId variable, initialized from localStorage if available
+        let userId = localStorage.getItem('devtrust_userId');
+
+        // Listen for auth state changes to keep userId updated
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                localStorage.setItem('devtrust_userId', userId);
+            } else {
+                userId = null;
+                localStorage.removeItem('devtrust_userId');
+                // Optionally redirect to login if not authenticated
+                // window.location.href = 'login.html';
+            }
+        });
+
+
+        // Three.js Background Animation Script (Common for all pages)
+        window.onload = function() {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const particleCount = 2000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const color1 = new THREE.Color(0x00FFFF);
+                const color2 = new THREE.Color(0x8A2BE2);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10;
+                    const lerpFactor = Math.random();
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                animate();
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001;
+                    if (positions[i + 2] > 5) {
+                        positions[i + 2] = -5;
+                    }
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize, false);
+            init();
+
+            // JavaScript for Mobile Navigation Toggle (Common for all pages)
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden');
+                });
+            }
+
+            // --- Score Calculation Logic ---
+            const addLinkButton = document.getElementById('add-link-button');
+            const contributionLinksContainer = document.getElementById('contribution-links-container');
+            let linkCount = 1;
+
+            addLinkButton.addEventListener('click', () => {
+                linkCount++;
+                const newLinkDiv = document.createElement('div');
+                newLinkDiv.innerHTML = `
+                    <label for="link-${linkCount}" class="block text-sm font-medium text-gray-300">Public Contribution Link ${linkCount}</label>
+                    <input type="url" id="link-${linkCount}" name="link-${linkCount}" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="https://example.com/your-profile">
+                `;
+                contributionLinksContainer.appendChild(newLinkDiv);
+            });
+
+            const scoreCalculationForm = document.getElementById('score-calculation-form');
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
+
+            scoreCalculationForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                if (!userId) {
+                    errorMessage.textContent = 'Please log in to calculate your score.';
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                loadingMessage.classList.remove('hidden');
+                errorMessage.classList.add('hidden'); // Hide previous errors
+
+                const contributionLinks = [];
+                for (let i = 1; i <= linkCount; i++) {
+                    const linkInput = document.getElementById(`link-${i}`);
+                    if (linkInput && linkInput.value.trim() !== '') {
+                        contributionLinks.push(linkInput.value.trim());
+                    }
+                }
+                const certificatesText = document.getElementById('certificates-text').value.trim();
+
+                try {
+                    const response = await fetch('http://localhost:5000/calculate-score', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            userId: userId,
+                            contributionLinks: contributionLinks,
+                            certificatesText: certificatesText
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Failed to calculate score.');
+                    }
+
+                    const result = await response.json();
+                    console.log("Score calculation result:", result);
+
+                    // Redirect to score-display.html after successful calculation
+                    window.location.href = 'score-display.html';
+
+                } catch (error) {
+                    console.error('Error calculating score:', error);
+                    errorMessage.textContent = `Error: ${error.message}`;
+                    errorMessage.classList.remove('hidden');
+                } finally {
+                    loadingMessage.classList.add('hidden');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

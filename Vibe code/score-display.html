@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Your Trust Score</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        #three-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Score Display Section Content -->
+    <section id="score-display-content" class="relative z-10 py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Your Developer Trust Score</h2>
+            <p class="text-md md:text-lg text-gray-400 max-w-3xl mx-auto">
+                Here's a detailed breakdown of your DevTrust Score, along with personalized insights and opportunities.
+            </p>
+        </div>
+
+        <!-- Overall Score Card - Moved to top and centered -->
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col items-center justify-center max-w-sm mx-auto mb-12">
+            <h3 class="text-2xl font-semibold text-white mb-4">Overall Score</h3>
+            <p class="text-6xl font-extrabold text-green-400 mb-4" id="display-score">--</p>
+            <p class="text-lg text-gray-300 text-center" id="score-summary">Loading your score...</p>
+            <p class="mt-4 text-sm text-yellow-300 text-center">
+                Your score is based on your latest calculation.
+            </p>
+        </div>
+
+        <!-- AI Feedback and Insights - Now full width -->
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg mb-12">
+            <h3 class="text-2xl font-semibold text-white mb-4">AI Feedback & Insights</h3>
+            <div class="text-gray-300 space-y-3" id="ai-feedback-content">
+                <p>Our AI is currently analyzing your provided information to generate personalized feedback.</p>
+                <p>This section will provide insights into your strengths in sentiment, professionalism, technical expertise, and collaboration, as well as areas where you can further develop your profile.</p>
+            </div>
+            <div id="ai-improvements-content" class="text-gray-300 mt-6 space-y-3">
+                <h4 class="text-xl font-semibold text-white mb-2">Areas for Improvement:</h4>
+                <p>Loading improvements...</p>
+            </div>
+        </div>
+
+        <!-- Matching Projects Section -->
+        <div class="mt-12 bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-semibold text-white mb-6">Matching Projects</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="matching-projects-container">
+                <!-- Placeholder Project Card 1 -->
+                <div class="bg-gray-700 p-5 rounded-md shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <h4 class="text-xl font-semibold text-white mb-2">Open Source AI Library</h4>
+                    <p class="text-gray-300 text-sm mb-3">A collaborative project to build a new machine learning library.</p>
+                    <span class="inline-block bg-blue-600 text-white text-xs px-3 py-1 rounded-full">Python</span>
+                    <span class="inline-block bg-green-600 text-white text-xs px-3 py-1 rounded-full ml-2">OpenCV</span>
+                    <a href="#" class="block mt-4 text-blue-400 hover:text-blue-300 text-sm">View Project Details &rarr;</a>
+                </div>
+                <!-- Placeholder Project Card 2 -->
+                <div class="bg-gray-700 p-5 rounded-md shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <h4 class="text-xl font-semibold text-white mb-2">Web3 Decentralized App</h4>
+                    <p class="text-gray-300 text-sm mb-3">Developing a secure decentralized application on Ethereum.</p>
+                    <span class="inline-block bg-purple-600 text-white text-xs px-3 py-1 rounded-full">Solidity</span>
+                    <span class="inline-block bg-yellow-600 text-white text-xs px-3 py-1 rounded-full ml-2">React</span>
+                    <a href="#" class="block mt-4 text-blue-400 hover:text-blue-300 text-sm">View Project Details &rarr;</a>
+                </div>
+                <!-- Placeholder Project Card 3 -->
+                <div class="bg-gray-700 p-5 rounded-md shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <h4 class="text-xl font-semibold text-white mb-2">Data Visualization Tool</h4>
+                    <p class="text-gray-300 text-sm mb-3">Creating interactive dashboards for large datasets.</p>
+                    <span class="inline-block bg-red-600 text-white text-xs px-3 py-1 rounded-full">D3.js</span>
+                    <span class="inline-block bg-teal-600 text-white text-xs px-3 py-1 rounded-full ml-2">JavaScript</span>
+                    <a href="#" class="block mt-4 text-blue-400 hover:text-blue-300 text-sm">View Project Details &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matching Jobs/Works Section -->
+        <div class="mt-12 bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-semibold text-white mb-6">Matching Job Opportunities</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="matching-jobs-container">
+                <!-- Placeholder Job Card 1 -->
+                <div class="bg-gray-700 p-5 rounded-md shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <h4 class="text-xl font-semibold text-white mb-2">Senior Backend Developer</h4>
+                    <p class="text-gray-300 text-sm mb-3">Company XYZ - Remote</p>
+                    <p class="text-400 text-xs mb-3">Seeking experienced Python developer for scalable microservices.</p>
+                    <span class="inline-block bg-gray-600 text-white text-xs px-3 py-1 rounded-full">Python</span>
+                    <span class="inline-block bg-gray-600 text-white text-xs px-3 py-1 rounded-full ml-2">AWS</span>
+                    <a href="#" class="block mt-4 text-blue-400 hover:text-blue-300 text-sm">Apply Now &rarr;</a>
+                </div>
+                <!-- Placeholder Job Card 2 -->
+                <div class="bg-gray-700 p-5 rounded-md shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <h4 class="text-xl font-semibold text-white mb-2">Frontend React Engineer</h4>
+                    <p class="text-gray-300 text-sm mb-3">Tech Solutions Inc. - New York, NY</p>
+                    <p class="text-400 text-xs mb-3">Build cutting-edge user interfaces for our flagship product.</p>
+                    <span class="inline-block bg-gray-600 text-white text-xs px-3 py-1 rounded-full">React</span>
+                    <span class="inline-block bg-gray-600 text-white text-xs px-3 py-1 rounded-full ml-2">TypeScript</span>
+                    <a href="#" class="block mt-4 text-blue-400 hover:text-blue-300 text-sm">Apply Now &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Initialization (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const displayScore = document.getElementById('display-score');
+        const scoreSummary = document.getElementById('score-summary');
+        const aiFeedbackContent = document.getElementById('ai-feedback-content');
+        const aiImprovementsContent = document.getElementById('ai-improvements-content');
+        // const loginPrompt = document.getElementById('login-prompt'); // Assuming you might add this if not logged in
+
+        let currentUserId = null; // Will be set by Firebase auth state listener
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                localStorage.setItem('devtrust_userId', currentUserId);
+                await fetchAndDisplayScore(currentUserId);
+            } else {
+                currentUserId = null;
+                localStorage.removeItem('devtrust_userId');
+                displayScore.textContent = '--';
+                scoreSummary.textContent = 'Please log in to view your score.';
+                aiFeedbackContent.innerHTML = '<p>Log in to see personalized AI feedback.</p>';
+                aiImprovementsContent.innerHTML = '<p>Log in to see personalized improvement suggestions.</p>';
+                // If you have a login prompt element on this page, uncomment below
+                // if (loginPrompt) loginPrompt.classList.remove('hidden');
+            }
+        });
+
+        async function fetchAndDisplayScore(currentUserId) {
+            if (!currentUserId) {
+                // This case should ideally be handled by onAuthStateChanged, but as a fallback
+                displayScore.textContent = '--';
+                scoreSummary.textContent = 'Please log in to view your score.';
+                aiFeedbackContent.innerHTML = '<p>Log in to see personalized AI feedback.</p>';
+                aiImprovementsContent.innerHTML = '<p>Log in to see personalized improvement suggestions.</p>';
+                return;
+            }
+
+            displayScore.textContent = '...';
+            scoreSummary.textContent = 'Loading your score...';
+            aiFeedbackContent.innerHTML = '<p>Loading AI feedback...</p>';
+            aiImprovementsContent.innerHTML = '<p>Loading improvement suggestions...</p>';
+
+            try {
+                const response = await fetch(`http://localhost:5000/get-user-profile/${currentUserId}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to fetch user profile.');
+                }
+                const userData = await response.json();
+                console.log("User data received on score-display.html:", userData); // Log data for debugging
+
+                const score = userData.trust_score; // Get score directly
+                const feedback = userData.score_feedback;
+
+                displayScore.textContent = score !== undefined ? score : '--'; // Handle undefined score
+
+                if (score === 0) { // Specific message for initial score 0
+                    scoreSummary.textContent = 'Your score is 0. Please calculate your first score by providing contribution links on the "Calculate Your Score" page.';
+                    displayScore.classList.remove('text-green-400', 'text-yellow-400');
+                    displayScore.classList.add('text-red-400');
+                } else if (score >= 80) {
+                    scoreSummary.textContent = feedback?.summary || 'Excellent! Your contributions demonstrate high trust and expertise across all analyzed areas.';
+                    displayScore.classList.remove('text-yellow-400', 'text-red-400'); // Remove red if previously set
+                    displayScore.classList.add('text-green-400');
+                } else if (score >= 60) {
+                    scoreSummary.textContent = feedback?.summary || 'Great job! Your score indicates solid contributions and a strong foundation.';
+                    displayScore.classList.remove('text-green-400', 'text-red-400'); // Remove green/red if previously set
+                    displayScore.classList.add('text-yellow-400');
+                } else if (score > 0 && score < 60) { // Ensure it's not 0 for this message
+                    scoreSummary.textContent = feedback?.summary || 'Good start! There are areas for improvement in your contributions to boost your score.';
+                    displayScore.classList.remove('text-green-400', 'text-yellow-400'); // Remove green/yellow if previously set
+                    displayScore.classList.add('text-red-400');
+                } else { // Fallback for undefined or non-numeric score
+                    scoreSummary.textContent = 'Score not available. Please calculate your score.';
+                    displayScore.classList.remove('text-green-400', 'text-yellow-400', 'text-red-400');
+                    displayScore.classList.add('text-gray-400');
+                }
+
+
+                if (feedback && feedback.details) {
+                    aiFeedbackContent.innerHTML = `
+                        <p><strong>Technical Expertise:</strong> ${feedback.details?.technical_expertise || 'N/A'}</p>
+                        <p><strong>Professionalism:</strong> ${feedback.details?.professionalism || 'N/A'}</p>
+                        <p><strong>Collaboration:</strong> ${feedback.details?.collaboration || 'N/A'}</p>
+                        <p><strong>Sentiment:</strong> ${feedback.details?.sentiment || 'N/A'}</p>
+                    `;
+                    aiImprovementsContent.innerHTML = `
+                        <h4 class="text-xl font-semibold text-white mb-2">Areas for Improvement:</h4>
+                        <p>${feedback.improvements || 'No specific improvement suggestions at this time.'}</p>
+                    `;
+                } else {
+                    aiFeedbackContent.innerHTML = '<p>No detailed AI feedback available yet. Calculate your score!</p>';
+                    aiImprovementsContent.innerHTML = '<p>No specific improvement suggestions at this time.</p>';
+                }
+
+            } catch (error) {
+                console.error('Error fetching score data:', error);
+                displayScore.textContent = 'Error';
+                scoreSummary.textContent = 'Could not load your score. Please try again or calculate a new one.';
+                aiFeedbackContent.innerHTML = '<p class="text-red-400">Failed to load AI feedback.</p>';
+                aiImprovementsContent.innerHTML = '<p class="text-red-400">Failed to load improvement suggestions.</p>';
+            }
+        }
+
+        // Three.js Background Animation Script (Common for all pages)
+        window.onload = function() {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const particleCount = 2000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const color1 = new THREE.Color(0x00FFFF);
+                const color2 = new THREE.Color(0x8A2BE2);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10;
+                    const lerpFactor = Math.random();
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                animate();
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001;
+                    if (positions[i + 2] > 5) {
+                        positions[i + 2] = -5;
+                    }
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize, false);
+            init();
+
+            // JavaScript for Mobile Navigation Toggle (Common for all pages)
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden');
+                });
+            }
+        };
+    </script>
+</body>
+</html>

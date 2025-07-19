@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        #three-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Login/Signup Section Content -->
+    <section id="auth-content" class="relative z-10 flex items-center justify-center min-h-screen px-4 py-16">
+        <div class="bg-gray-800 bg-opacity-70 p-8 md:p-10 rounded-xl shadow-2xl max-w-md mx-auto backdrop-blur-sm w-full">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center" id="auth-title">Login to DevTrust AI</h2>
+
+            <!-- Login Form -->
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="login-email" name="email" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="your@example.com" required>
+                </div>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="login-password" name="password" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="••••••••" required>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded">
+                        <label for="remember_me" class="ml-2 block text-gray-300">Remember me</label>
+                    </div>
+                    <a href="#" class="font-medium text-blue-400 hover:text-blue-300 transition duration-300 ease-in-out">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    Login
+                </button>
+            </form>
+
+            <!-- Signup Form (initially hidden) -->
+            <form id="signup-form" class="space-y-6 hidden">
+                <div>
+                    <label for="signup-username" class="block text-sm font-medium text-gray-300">Username</label>
+                    <input type="text" id="signup-username" name="username" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Your Username" required>
+                </div>
+                <div>
+                    <label for="signup-email" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="signup-email" name="email" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="your@example.com" required>
+                </div>
+                <div>
+                    <label for="signup-password" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="signup-password" name="password" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    Sign Up
+                </button>
+            </form>
+
+            <p class="mt-8 text-center text-gray-400 text-sm">
+                <span id="toggle-auth-text">Don't have an account?</span>
+                <a href="#" id="toggle-auth-link" class="font-medium text-blue-400 hover:text-blue-300 transition duration-300 ease-in-out">Sign Up</a>
+            </p>
+            <div id="auth-message" class="mt-4 text-center text-sm text-red-400"></div>
+        </div>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Authentication Logic (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Global userId variable
+        let userId = null;
+        let isAuthReady = false;
+
+        // Listen for auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                console.log("User logged in:", userId);
+                // Store userId in localStorage for use across pages
+                localStorage.setItem('devtrust_userId', userId);
+            } else {
+                userId = null;
+                console.log("User logged out or not authenticated.");
+                localStorage.removeItem('devtrust_userId');
+            }
+            isAuthReady = true;
+        });
+
+        window.onload = function() {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const particleCount = 2000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const color1 = new THREE.Color(0x00FFFF);
+                const color2 = new THREE.Color(0x8A2BE2);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10;
+                    const lerpFactor = Math.random();
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                animate();
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001;
+                    if (positions[i + 2] > 5) {
+                        positions[i + 2] = -5;
+                    }
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize, false);
+            init();
+
+            // JavaScript for Mobile Navigation Toggle (Common for all pages)
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden');
+                });
+            }
+
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const toggleAuthLink = document.getElementById('toggle-auth-link');
+            const toggleAuthText = document.getElementById('toggle-auth-text');
+            const authTitle = document.getElementById('auth-title');
+            const authMessage = document.getElementById('auth-message');
+
+            let isLoginForm = true; // State to track which form is active
+
+            toggleAuthLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                isLoginForm = !isLoginForm;
+                if (isLoginForm) {
+                    loginForm.classList.remove('hidden');
+                    signupForm.classList.add('hidden');
+                    authTitle.textContent = 'Login to DevTrust AI';
+                    toggleAuthText.textContent = "Don't have an account?";
+                    toggleAuthLink.textContent = "Sign Up";
+                } else {
+                    loginForm.classList.add('hidden');
+                    signupForm.classList.remove('hidden');
+                    authTitle.textContent = 'Sign Up for DevTrust AI';
+                    toggleAuthText.textContent = "Already have an account?";
+                    toggleAuthLink.textContent = "Login";
+                }
+                authMessage.textContent = ''; // Clear messages on toggle
+            });
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = loginForm['login-email'].value;
+                const password = loginForm['login-password'].value;
+                authMessage.textContent = ''; // Clear previous messages
+
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    console.log("User signed in:", userCredential.user.uid);
+                    // Enhanced confirmation message
+                    authMessage.textContent = `Login successful! Signed in as ${email}. Redirecting...`;
+                    authMessage.classList.remove('text-red-400');
+                    authMessage.classList.add('text-green-400');
+                    // Redirect to home or dashboard after successful login
+                    window.location.href = 'index.html'; // Or 'score-display.html'
+                } catch (error) {
+                    console.error("Login error:", error.message);
+                    let errorMessage = "Login failed. Please check your email and password.";
+                    if (error.code === 'auth/invalid-email') {
+                        errorMessage = "Invalid email address.";
+                    } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                        errorMessage = "Incorrect email or password.";
+                    }
+                    authMessage.textContent = errorMessage;
+                    authMessage.classList.remove('text-green-400');
+                    authMessage.classList.add('text-red-400');
+                }
+            });
+
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = signupForm['signup-username'].value;
+                const email = signupForm['signup-email'].value;
+                const password = signupForm['signup-password'].value;
+                authMessage.textContent = ''; // Clear previous messages
+
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const newUserId = userCredential.user.uid;
+                    console.log("User signed up:", newUserId);
+
+                    // Send user data to backend to create profile in Firestore
+                    const backendResponse = await fetch('http://localhost:5000/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password, username }),
+                    });
+
+                    if (!backendResponse.ok) {
+                        const errorData = await backendResponse.json();
+                        throw new Error(errorData.error || 'Failed to create user profile on backend.');
+                    }
+
+                    // Enhanced confirmation message for signup
+                    authMessage.textContent = `Sign up successful for ${email}! Redirecting to login...`;
+                    authMessage.classList.remove('text-red-400');
+                    authMessage.classList.add('text-green-400');
+                    // Automatically switch to login form after successful signup
+                    isLoginForm = true;
+                    loginForm.classList.remove('hidden');
+                    signupForm.classList.add('hidden');
+                    authTitle.textContent = 'Login to DevTrust AI';
+                    toggleAuthText.textContent = "Don't have an account?";
+                    toggleAuthLink.textContent = "Sign Up";
+                    loginForm['login-email'].value = email; // Pre-fill email
+                } catch (error) {
+                    console.error("Signup error:", error.message);
+                    let errorMessage = "Sign up failed. Please try again.";
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMessage = "Email is already in use.";
+                    } else if (error.code === 'auth/weak-password') {
+                        errorMessage = "Password should be at least 6 characters.";
+                    }
+                    // Added console log for clarity
+                    console.log("Frontend error message set:", errorMessage);
+                    authMessage.textContent = errorMessage;
+                    authMessage.classList.remove('text-green-400');
+                    authMessage.classList.add('text-red-400');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

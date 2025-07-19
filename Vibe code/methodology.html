@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Our Methodology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        #three-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Methodology Section Content -->
+    <section id="methodology-content" class="relative z-10 py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Our AI-Driven Methodology</h2>
+            <p class="text-md md:text-lg text-gray-400 max-w-3xl mx-auto">
+                Discover the sophisticated process behind our DevTrust AI Score.
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-gray-300 space-y-8">
+            <p class="text-lg leading-relaxed">
+                At DevTrust AI, our methodology is built on a foundation of advanced artificial intelligence and machine learning, designed to provide a fair, comprehensive, and unbiased assessment of developer trustworthiness. We believe that a developer's true value extends beyond just lines of code, encompassing their communication, collaboration, and professional conduct.
+            </p>
+
+            <h3 class="text-2xl font-semibold text-white mb-4">The DevTrust AI Assessment Pillars:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-blue-400 mb-2">1. Data Ingestion & Pre-processing</h4>
+                    <p class="text-sm">We securely collect data from publicly available sources such as GitHub repositories, open-source project contributions, technical forums (e.g., Stack Overflow), professional networking sites (e.g., LinkedIn), and provided certifications. This raw data undergoes rigorous cleaning, normalization, and anonymization to ensure privacy and consistency.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-green-400 mb-2">2. Multi-Dimensional Feature Extraction</h4>
+                    <p class="text-sm">Our AI models extract hundreds of features across various dimensions. For code, this includes code quality, complexity, commit frequency, and issue resolution. For interactions, it involves sentiment analysis of comments, forum posts, and pull request discussions, as well as communication patterns and responsiveness.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-purple-400 mb-2">3. AI-Powered Trust Modeling</h4>
+                    <p class="text-sm">Leveraging large language models (LLMs) like Gemini, we build a sophisticated trust model. This model is trained on diverse datasets to understand nuanced indicators of trustworthiness, including consistency in contributions, proactive problem-solving, constructive feedback, and ethical conduct. It identifies patterns that correlate with high-trust developers.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-yellow-400 mb-2">4. Score Generation & Personalized Feedback</h4>
+                    <p class="text-sm">The extracted features and trust model outputs culminate in a single, comprehensive DevTrust Score (0-100). Alongside this score, the AI generates personalized feedback, highlighting strengths in areas like Technical Expertise, Professionalism, Collaboration, and Sentiment, and provides actionable suggestions for improvement.</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold text-white mb-4 mt-8">Commitment to Fairness & Transparency:</h3>
+            <p class="text-lg leading-relaxed">
+                We are committed to maintaining fairness and transparency in our methodology. Our models are continuously monitored and updated to mitigate biases and ensure that assessments are based solely on objective, verifiable contributions. We aim to provide developers with a clear understanding of how their score is derived and what steps they can take to enhance their trust profile.
+            </p>
+            <p class="text-lg leading-relaxed">
+                Our goal is to empower developers to take control of their professional narrative and to provide organizations with a reliable tool for talent assessment.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Initialization (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // This listener ensures userId is updated and stored in localStorage across pages
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                localStorage.setItem('devtrust_userId', user.uid);
+            } else {
+                localStorage.removeItem('devtrust_userId');
+            }
+        });
+
+        window.onload = function() {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const particleCount = 2000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const color1 = new THREE.Color(0x00FFFF);
+                const color2 = new THREE.Color(0x8A2BE2);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10;
+                    const lerpFactor = Math.random();
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                animate();
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001;
+                    if (positions[i + 2] > 5) {
+                        positions[i + 2] = -5;
+                    }
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize, false);
+            init();
+
+            // JavaScript for Mobile Navigation Toggle (Common for all pages)
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden');
+                });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Unlock Developer Potential</title>
+    <!-- Tailwind CSS CDN for modern styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN for the 3D background animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Google Fonts - Inter for a clean, modern typeface -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font to the entire body */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll on smaller screens */
+        }
+        /* Style for the Three.js background canvas */
+        #three-bg {
+            position: absolute; /* Position absolutely to cover the entire viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place it behind all other content */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 text-center py-20 md:py-32 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+            Unlock Your <span class="text-blue-400">Developer Potential</span> with DevTrust AI
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+            Revolutionizing how trust is built and recognized in the developer community through AI-driven insights.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="test-score.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                Calculate Your Trust Score
+            </a>
+            <a href="methodology.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                Learn Our Methodology
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="relative z-10 py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-12 text-center">Why DevTrust AI?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature Card 1 -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center text-center transform hover:scale-105 transition duration-300 ease-in-out">
+                <div class="text-blue-400 mb-4">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.007 12.007 0 002 12c0 2.781.82 5.405 2.308 7.642.138.207.295.408.468.601C7.295 21.49 9.516 22 12 22s4.705-.51 7.224-1.757c.173-.193.33-.394.468-.601C21.18 17.405 22 14.781 22 12A12.007 12.007 0 0018.382 7.984z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-3">AI-Powered Trust Scores</h3>
+                <p class="text-gray-300 text-sm">Our advanced AI analyzes your contributions to provide an unbiased trust score.</p>
+            </div>
+            <!-- Feature Card 2 -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center text-center transform hover:scale-105 transition duration-300 ease-in-out">
+                <div class="text-green-400 mb-4">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-3">Personalized Insights</h3>
+                <p class="text-gray-300 text-sm">Receive detailed feedback on technical expertise, professionalism, and collaboration.</p>
+            </div>
+            <!-- Feature Card 3 -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center text-center transform hover:scale-105 transition duration-300 ease-in-out">
+                <div class="text-purple-400 mb-4">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-3">Career Opportunities</h3>
+                <p class="text-gray-300 text-sm">Get matched with projects and jobs that align with your unique trust profile.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="relative z-10 text-center py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Build Your Trust?</h2>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+            Join DevTrust AI today and take the first step towards a more trusted and recognized developer journey.
+        </p>
+        <a href="login.html" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            Get Started Now
+        </a>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Initialization (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // This listener ensures userId is updated and stored in localStorage across pages
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                localStorage.setItem('devtrust_userId', user.uid);
+            } else {
+                localStorage.removeItem('devtrust_userId');
+            }
+        });
+
+        // Three.js Background Animation Script (Common for all pages)
+        window.onload = function () {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            /**
+             * Initializes the Three.js scene, camera, renderer, and particles for the background animation.
+             */
+            function init() {
+                // Create a new Three.js scene
+                scene = new THREE.Scene();
+
+                // Create a perspective camera
+                // Parameters: FOV, Aspect Ratio, Near Clipping Plane, Far Clipping Plane
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5; // Position the camera along the Z-axis
+
+                // Create a WebGL renderer with antialiasing and transparent background
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight); // Set renderer size to window dimensions
+                container.appendChild(renderer.domElement); // Add the renderer's canvas to the DOM
+
+                // Define particle properties
+                const particleCount = 2000; // Number of particles
+                const positions = new Float32Array(particleCount * 3); // Array to store particle positions (x, y, z for each)
+                const colors = new Float32Array(particleCount * 3); // Array to store particle colors (r, g, b for each)
+
+                // Define two colors for interpolation to create a gradient effect
+                const color1 = new THREE.Color(0x00FFFF); // Cyan
+                const color2 = new THREE.Color(0x8A2BE2); // BlueViolet
+
+                // Populate particle positions and colors
+                for (let i = 0; i < particleCount; i++) {
+                    // Random positions within a cube for initial distribution
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10; // X-coordinate (-10 to 10)
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10; // Y-coordinate (-10 to 10)
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10; // Z-coordinate (-10 to 10)
+
+                    // Interpolate between color1 and color2 for a varied color effect
+                    const lerpFactor = Math.random(); // Random factor between 0 and 1
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                // Create a BufferGeometry and set its attributes
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                // Create a PointsMaterial for the particles
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05, // Size of each particle
+                    vertexColors: true, // Enable per-vertex colors
+                    transparent: true, // Enable transparency
+                    opacity: 0.7, // Set overall opacity
+                    blending: THREE.AdditiveBlending // Use additive blending for glowing effect
+                });
+
+                // Create the particle system (Points object) and add it to the scene
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                // Add ambient light to the scene for overall illumination
+                const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+                scene.add(ambientLight);
+
+                // Add a directional light to simulate a light source
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // White light, half intensity
+                directionalLight.position.set(1, 1, 1).normalize(); // Position the light
+                scene.add(directionalLight);
+
+                // Start the animation loop
+                animate();
+            }
+
+            /**
+             * Animation loop for the Three.js background.
+             * Updates particle positions and renders the scene.
+             */
+            function animate() {
+                requestAnimationFrame(animate); // Request the next animation frame
+
+                // Rotate particles for a dynamic effect
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+
+                // Animate particles moving towards the camera and reset when they pass
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001; // Move particles along the Z-axis
+                    if (positions[i + 2] > 5) { // If particle moves past a certain point
+                        positions[i + 2] = -5; // Reset it to the back
+                    }
+                }
+                // Mark the position attribute as needing an update to reflect changes
+                particles.geometry.attributes.position.needsUpdate = true;
+
+                // Render the scene with the camera
+                renderer.render(scene, camera);
+            }
+
+            /**
+             * Handles window resizing to ensure the Three.js canvas remains responsive.
+             */
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight; // Update camera aspect ratio
+                camera.updateProjectionMatrix(); // Update camera's projection matrix
+                renderer.setSize(window.innerWidth, window.innerHeight); // Resize the renderer
+            }
+
+            // Add event listener for window resize
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Initialize the 3D scene when the window loads
+            init();
+
+            // JavaScript for Mobile Navigation Toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden'); // Toggle the 'hidden' class for mobile menu
+                });
+            }
+        };
+    </script>
+</body>
+</html>

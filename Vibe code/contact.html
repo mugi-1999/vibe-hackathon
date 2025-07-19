@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTrust AI - Contact Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        #three-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        /* Custom scrollbar for chat history */
+        #chat-history::-webkit-scrollbar {
+            width: 8px;
+        }
+        #chat-history::-webkit-scrollbar-track {
+            background: #1f2937; /* bg-gray-800 */
+            border-radius: 10px;
+        }
+        #chat-history::-webkit-scrollbar-thumb {
+            background: #4b5563; /* bg-gray-600 */
+            border-radius: 10px;
+        }
+        #chat-history::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* bg-gray-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="three-bg"></div>
+
+    <!-- Header Section: Common across all pages -->
+    <header class="relative z-10 p-4 md:p-6 bg-gray-800 bg-opacity-70 shadow-lg rounded-b-xl mx-auto max-w-7xl mt-4">
+        <nav class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-bold text-xl md:text-2xl tracking-tight">DevTrust AI</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded-md text-gray-200 border-gray-400 hover:text-white hover:border-white transition duration-300 ease-in-out">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
+                <div class="text-sm lg:flex-grow">
+                    <a href="index.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Home</a>
+                    <a href="about.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">About</a>
+                    <a href="methodology.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-4 p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Methodology</a>
+                    <a href="contact.html" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-gray-700">Contact</a>
+                </div>
+                <div>
+                    <a href="login.html" class="inline-block text-sm px-4 py-2 leading-none border rounded-md text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0 transition duration-300 ease-in-out">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contact Section Content (Existing Form) -->
+    <section id="contact-form-section" class="relative z-10 py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Get in Touch</h2>
+            <p class="text-md md:text-lg text-gray-400 max-w-3xl mx-auto">
+                Have questions or want to learn more? Reach out to us!
+            </p>
+        </div>
+        <div class="max-w-xl mx-auto bg-gray-800 p-8 rounded-lg shadow-md">
+            <form class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
+                    <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Your Name">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="your@example.com">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
+                    <textarea id="message" name="message" rows="5" class="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Your message..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Gemini Chatbot Section -->
+    <section id="chatbot-section" class="relative z-10 py-16 md:py-24 bg-gray-900 bg-opacity-80 rounded-xl shadow-xl mx-auto max-w-7xl px-4 md:px-8 my-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Chat with our AI Assistant</h2>
+            <p class="text-md md:text-lg text-gray-400 max-w-3xl mx-auto">
+                Ask us anything about DevTrust AI, our methodology, or developer trust!
+            </p>
+        </div>
+        <div class="max-w-xl mx-auto bg-gray-800 p-6 rounded-lg shadow-md flex flex-col h-[500px]">
+            <!-- Chat History Display -->
+            <div id="chat-history" class="flex-grow overflow-y-auto p-4 bg-gray-700 rounded-md mb-4 space-y-4">
+                <!-- Initial bot message -->
+                <div class="flex justify-start">
+                    <div class="bg-gray-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                        Hi there! How can I help you today regarding DevTrust AI?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div id="chat-input-area" class="flex items-center space-x-4">
+                <input type="text" id="user-input" class="flex-grow px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Type your message...">
+                <button id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    Send
+                </button>
+            </div>
+            <!-- Loading indicator -->
+            <div id="loading-indicator" class="text-center text-gray-400 mt-2 hidden">
+                AI is typing...
+            </div>
+            <div id="chat-error-message" class="mt-2 text-center text-red-400 hidden"></div>
+            <div id="login-prompt" class="mt-2 text-center text-yellow-400 hidden">
+                Please <a href="login.html" class="underline hover:text-yellow-300">log in</a> to save your chat history.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section: Common across all pages -->
+    <footer class="relative z-10 bg-gray-800 bg-opacity-70 text-gray-400 text-center p-6 rounded-t-xl mx-auto max-w-7xl mt-8">
+        <p>&copy; 2025 DevTrust AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // --- Firebase Initialization (MUST be at the top level of the module) ---
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        // Your Firebase project configuration (PASTE IT HERE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmuyJO-Kv4rxR8mpYoMhzvBxLBcAYAyvQ",
+            authDomain: "devtrustai-app.firebaseapp.com",
+            projectId: "devtrustai-app",
+            storageBucket: "devtrustai-app.firebasestorage.app",
+            messagingSenderId: "197032233591",
+            appId: "1:197032233591:web:f2967aaf8eeb4b5cf5d472",
+            measurementId: "G-6MCP98FQ29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const chatHistoryDiv = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const chatErrorMessage = document.getElementById('chat-error-message');
+        const loginPrompt = document.getElementById('login-prompt');
+
+        let currentUserId = null; // Will be set by Firebase auth state listener
+
+        // Firebase Auth state listener to get userId and load history
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                localStorage.setItem('devtrust_userId', currentUserId); // Store for other pages
+                loadChatHistory(currentUserId);
+            } else {
+                currentUserId = null;
+                localStorage.removeItem('devtrust_userId');
+                chatHistoryDiv.innerHTML = `
+                    <div class="flex justify-start">
+                        <div class="bg-gray-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                            Hi there! How can I help you today regarding DevTrust AI?
+                        </div>
+                    </div>
+                `;
+                loginPrompt.classList.remove('hidden'); // Show login prompt
+            }
+        });
+
+        // Function to add a message to the chat history display
+        function addMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('flex', 'mb-2');
+
+            if (sender === 'user') {
+                messageDiv.classList.add('justify-end');
+                messageDiv.innerHTML = `
+                    <div class="bg-blue-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                        ${message}
+                    </div>
+                `;
+            } else { // sender === 'bot'
+                messageDiv.classList.add('justify-start');
+                messageDiv.innerHTML = `
+                    <div class="bg-gray-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                        ${message}
+                    </div>
+                `;
+            }
+            chatHistoryDiv.appendChild(messageDiv);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to bottom
+        }
+
+        // Function to load chat history from backend
+        async function loadChatHistory(userId) {
+            if (!userId) {
+                loginPrompt.classList.remove('hidden');
+                return;
+            }
+            loginPrompt.classList.add('hidden'); // Hide if user is logged in
+
+            chatHistoryDiv.innerHTML = `
+                <div class="flex justify-start">
+                    <div class="bg-gray-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                        Loading chat history...
+                    </div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`http://localhost:5000/get-chat-history/${userId}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to load chat history.');
+                }
+                const history = await response.json();
+
+                chatHistoryDiv.innerHTML = ''; // Clear loading message
+                if (history.length === 0) {
+                    addMessage('bot', 'Hi there! How can I help you today regarding DevTrust AI?');
+                } else {
+                    history.forEach(msg => addMessage(msg.sender, msg.text));
+                }
+            } catch (error) {
+                console.error('Error loading chat history:', error);
+                chatErrorMessage.textContent = 'Failed to load chat history. Please try again later.';
+                chatErrorMessage.classList.remove('hidden');
+                chatHistoryDiv.innerHTML = `
+                    <div class="flex justify-start">
+                        <div class="bg-red-600 text-white p-3 rounded-lg max-w-[70%] shadow-md">
+                            Error loading chat history.
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to send a message to the backend
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            addMessage('user', message);
+            userInput.value = '';
+            chatErrorMessage.classList.add('hidden'); // Hide previous errors
+
+            loadingIndicator.classList.remove('hidden');
+            sendButton.disabled = true;
+
+            try {
+                const response = await fetch('http://localhost:5000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: message, userId: currentUserId }), // Send userId
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Something went wrong with the AI response.');
+                }
+
+                const data = await response.json();
+                addMessage('bot', data.response);
+            } catch (error) {
+                console.error('Error sending message:', error);
+                chatErrorMessage.textContent = `Error: ${error.message}`;
+                chatErrorMessage.classList.remove('hidden');
+                addMessage('bot', 'Sorry, I am having trouble connecting right now. Please try again later.');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+                sendButton.disabled = false;
+            }
+        }
+
+        // Event listeners for sending messages
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        window.onload = function() {
+            const container = document.getElementById('three-bg');
+            let scene, camera, renderer, particles, particleMaterial;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const particleCount = 2000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const color1 = new THREE.Color(0x00FFFF);
+                const color2 = new THREE.Color(0x8A2BE2);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10;
+                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10;
+                    const lerpFactor = Math.random();
+                    const mixedColor = new THREE.Color().lerpColors(color1, color2, lerpFactor);
+                    colors[i * 3] = mixedColor.r;
+                    colors[i * 3 + 1] = mixedColor.g;
+                    colors[i * 3 + 2] = mixedColor.b;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                particleMaterial = new THREE.PointsMaterial({
+                    size: 0.05,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                animate();
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0007;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 2] += 0.001;
+                    if (positions[i + 2] > 5) {
+                        positions[i + 2] = -5;
+                    }
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize, false);
+            init();
+
+            // JavaScript for Mobile Navigation Toggle (Common for all pages)
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+
+            if (navToggle && navContent) {
+                navToggle.addEventListener('click', () => {
+                    navContent.classList.toggle('hidden');
+                });
+            }
+        };
+    </script>
+</body>
+</html>
